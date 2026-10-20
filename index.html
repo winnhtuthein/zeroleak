@@ -1,0 +1,144 @@
+<!doctype html>
+<!--
+  ZeroLeak. Copyright (C) 2026 Winn Htut Hein.
+  SPDX-License-Identifier: AGPL-3.0-or-later. See LICENSE and NOTICE.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- the real network lock. browser itself refuses fetch/XHR/websockets/forms/remote assets, so don't loosen this -->
+<meta http-equiv="Content-Security-Policy" content="connect-src 'none'; img-src data:; font-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Winn Htut Hein">
+<meta name="description" content="Paste your code, get it back with API keys, passwords and internal names stripped out. Runs entirely in your browser.">
+<meta property="og:title" content="ZeroLeak: scrub secrets before pasting code into AI">
+<meta property="og:description" content="Local-only secret and name scrubber. Nothing is uploaded.">
+<meta property="og:type" content="website">
+<meta name="copyright" content="Copyright 2026 Winn Htut Hein. AGPL-3.0-or-later.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0e1217">
+<title>ZeroLeak | scrub secrets before pasting code into an AI chat</title>
+<!-- favicon is inlined so there's one less file to ship -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2096%2096%22%3E%3Crect%20width=%2296%22%20height=%2296%22%20rx=%2222%22%20fill=%22%23e8e9e6%22/%3E%3Crect%20x=%2222%22%20y=%2220%22%20width=%2252%22%20height=%2214%22%20rx=%222%22%20fill=%22%230b0d10%22/%3E%3Cpath%20d=%22M55%2038H74L41%2070H22Z%22%20fill=%22%23f3d54e%22/%3E%3Crect%20x=%2222%22%20y=%2274%22%20width=%2252%22%20height=%2214%22%20rx=%222%22%20fill=%22%230b0d10%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#code-in">Skip to the editor</a>
+
+<!-- ===== top bar: logo, sandbox badge, shortcut hint ===== -->
+<header class="topbar">
+  <div class="logo-box">
+    <!-- inline on purpose, the CSP blocks external images -->
+    <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 388 104" role="img" aria-label="ZeroLeak logo: a paper sheet with a black redaction bar and a yellow Z-slash"><title>ZeroLeak</title><path d="M16 0H70Q72 0 73.4 1.4L94.6 22.6Q96 24 96 26V80A16 16 0 0 1 80 96H16A16 16 0 0 1 0 80V16A16 16 0 0 1 16 0Z" fill="#e8e9e6"/><path d="M72 0V22Q72 24 74 24H96Z" fill="#c3c5c0"/><rect x="27" y="27" width="42" height="10" rx="1.6" fill="#0b0d10"/><path d="M54 41H69L42 69H27Z" fill="#f3d54e"/><rect x="27" y="73" width="42" height="10" rx="1.6" fill="#0b0d10"/><path transform="translate(120,68.30)" d="M2.668 0.0V-9.744L22.736 -32.828V-33.756H3.248V-40.6H30.740000000000002V-30.856L10.672 -7.772V-6.844H30.856V0.0Z" fill="#e8e9e6"/><path transform="translate(120,68.30)" d="M49.88 0.812Q45.58800000000001 0.812 42.31100000000001 -1.0150000000000001Q39.034000000000006 -2.842 37.20700000000001 -6.1770000000000005Q35.38 -9.512 35.38 -14.036000000000001V-14.732000000000001Q35.38 -19.256 37.178000000000004 -22.591Q38.976000000000006 -25.926000000000002 42.224000000000004 -27.753Q45.472 -29.580000000000002 49.764 -29.580000000000002Q53.998000000000005 -29.580000000000002 57.13 -27.695Q60.262 -25.810000000000002 62.002 -22.475Q63.742000000000004 -19.14 63.742000000000004 -14.732000000000001V-12.238000000000001H42.804Q42.92 -9.280000000000001 45.008 -7.424000000000001Q47.096000000000004 -5.5680000000000005 50.11200000000001 -5.5680000000000005Q53.18600000000001 -5.5680000000000005 54.63600000000001 -6.902000000000001Q56.086000000000006 -8.236 56.84 -9.860000000000001L62.81400000000001 -6.728000000000001Q62.00200000000001 -5.220000000000001 60.465 -3.4510000000000005Q58.928000000000004 -1.6820000000000002 56.376000000000005 -0.43500000000000005Q53.824000000000005 0.812 49.88 0.812ZM42.862 -17.69H56.318000000000005Q56.086000000000006 -20.184 54.31700000000001 -21.692Q52.548 -23.200000000000003 49.706 -23.200000000000003Q46.748000000000005 -23.200000000000003 45.008 -21.692Q43.268 -20.184 42.862 -17.69Z" fill="#e8e9e6"/><path transform="translate(120,68.30)" d="M69.542 0.0V-28.768H76.734V-25.52H77.778Q78.416 -27.26 79.895 -28.072000000000003Q81.374 -28.884 83.346 -28.884H86.826V-22.388H83.23Q80.446 -22.388 78.648 -20.909Q76.85 -19.43 76.85 -16.356V0.0Z" fill="#e8e9e6"/><rect x="210.8" y="34.7" width="38.2" height="38.4" rx="3" fill="#f3d54e"/><path transform="translate(120,68.30)" d="M109.852 0.812Q105.56 0.812 102.138 -0.928Q98.716 -2.668 96.744 -5.974Q94.772 -9.280000000000001 94.772 -13.92V-14.848Q94.772 -19.488 96.744 -22.794Q98.716 -26.1 102.138 -27.840000000000003Q105.56 -29.580000000000002 109.852 -29.580000000000002Q114.144 -29.580000000000002 117.566 -27.840000000000003Q120.988 -26.1 122.96000000000001 -22.794Q124.932 -19.488 124.932 -14.848V-13.92Q124.932 -9.280000000000001 122.96000000000001 -5.974Q120.988 -2.668 117.566 -0.928Q114.144 0.812 109.852 0.812ZM109.852 -5.684Q113.21600000000001 -5.684 115.42 -7.859Q117.624 -10.034 117.624 -14.094000000000001V-14.674000000000001Q117.624 -18.734 115.449 -20.909Q113.274 -23.084 109.852 -23.084Q106.488 -23.084 104.28399999999999 -20.909Q102.08 -18.734 102.08 -14.674000000000001V-14.094000000000001Q102.08 -10.034 104.28399999999999 -7.859Q106.488 -5.684 109.852 -5.684Z" fill="#0b0d10"/><path transform="translate(120,68.30)" d="M135.662 0.0V-40.6H143.318V-6.96H161.87800000000001V0.0Z" fill="#e8e9e6"/><path transform="translate(120,68.30)" d="M179.162 0.812Q174.87 0.812 171.59300000000002 -1.0150000000000001Q168.316 -2.842 166.489 -6.1770000000000005Q164.662 -9.512 164.662 -14.036000000000001V-14.732000000000001Q164.662 -19.256 166.46 -22.591Q168.258 -25.926000000000002 171.506 -27.753Q174.754 -29.580000000000002 179.046 -29.580000000000002Q183.28 -29.580000000000002 186.412 -27.695Q189.544 -25.810000000000002 191.284 -22.475Q193.024 -19.14 193.024 -14.732000000000001V-12.238000000000001H172.086Q172.202 -9.280000000000001 174.29 -7.424000000000001Q176.378 -5.5680000000000005 179.394 -5.5680000000000005Q182.468 -5.5680000000000005 183.918 -6.902000000000001Q185.368 -8.236 186.122 -9.860000000000001L192.096 -6.728000000000001Q191.284 -5.220000000000001 189.747 -3.4510000000000005Q188.21 -1.6820000000000002 185.65800000000002 -0.43500000000000005Q183.106 0.812 179.162 0.812ZM172.144 -17.69H185.6Q185.368 -20.184 183.599 -21.692Q181.83 -23.200000000000003 178.988 -23.200000000000003Q176.03 -23.200000000000003 174.29000000000002 -21.692Q172.55 -20.184 172.144 -17.69Z" fill="#e8e9e6"/><path transform="translate(120,68.30)" d="M207.756 0.812Q204.68200000000002 0.812 202.246 -0.261Q199.81 -1.334 198.389 -3.393Q196.96800000000002 -5.452 196.96800000000002 -8.41Q196.96800000000002 -11.368 198.389 -13.369Q199.81 -15.370000000000001 202.33300000000003 -16.385Q204.85600000000002 -17.400000000000002 208.104 -17.400000000000002H215.99200000000002V-19.024Q215.99200000000002 -21.054000000000002 214.716 -22.359Q213.44 -23.664 210.656 -23.664Q207.93 -23.664 206.596 -22.417Q205.262 -21.17 204.85600000000002 -19.198L198.12800000000001 -21.46Q198.824 -23.664 200.36100000000002 -25.491Q201.89800000000002 -27.318 204.479 -28.449Q207.06 -29.580000000000002 210.77200000000002 -29.580000000000002Q216.45600000000002 -29.580000000000002 219.762 -26.738Q223.068 -23.896 223.068 -18.502000000000002V-7.772Q223.068 -6.032 224.692 -6.032H227.012V0.0H222.14000000000001Q219.994 0.0 218.602 -1.044Q217.21 -2.088 217.21 -3.8280000000000003V-3.886H216.108Q215.876 -3.19 215.06400000000002 -2.059Q214.252 -0.928 212.512 -0.057999999999999996Q210.77200000000002 0.812 207.756 0.812ZM209.032 -5.104Q212.10600000000002 -5.104 214.04900000000004 -6.8149999999999995Q215.99200000000002 -8.526 215.99200000000002 -11.368V-11.948H208.626Q206.596 -11.948 205.436 -11.078Q204.276 -10.208 204.276 -8.642000000000001Q204.276 -7.0760000000000005 205.49400000000003 -6.09Q206.71200000000002 -5.104 209.032 -5.104Z" fill="#e8e9e6"/><path transform="translate(120,68.30)" d="M231.65200000000002 0.0V-40.6H238.96V-18.154H240.00400000000002L249.51600000000002 -28.768H259.028L245.746 -14.848L259.492 0.0H250.096L240.00400000000002 -11.426H238.96V0.0Z" fill="#e8e9e6"/></svg>
+  </div>
+
+  <div id="safe-badge" class="safe-badge" role="status" data-state="sealed" aria-live="polite">
+    <span class="badge-lock" aria-hidden="true"><i></i></span>
+    <span class="badge-text">
+      <strong>Runs 100% locally</strong>
+      <span id="badge-note">Lives in this tab only, 0 requests sent</span>
+    </span>
+  </div>
+
+  <span class="kbd-tip"><kbd class="cmd-key">Ctrl</kbd><kbd>↵</kbd> sanitize</span>
+</header>
+
+
+
+<!-- ===== main area ===== -->
+<main class="main-grid">
+  <section class="workspace" aria-label="Sanitizer">
+    <!-- buttons above the editors -->
+    <div class="actions-bar" role="toolbar" aria-label="Actions">
+      <button id="demo-btn" class="btn" type="button">Try a sample</button>
+      <button id="scrub-btn" class="btn primary" type="button">Sanitize</button>
+      <button id="copy-btn" class="btn ghost" type="button">Copy</button>
+      <button id="save-btn" class="btn ghost" type="button">Export</button>
+      <button id="wipe-btn" class="btn ghost danger" type="button">Clear</button>
+    </div>
+
+    <div class="split-view">
+      <!-- left: what you paste -->
+      <article class="col">
+        <header class="col-top">
+          <h2>Original</h2>
+          <span id="hl-key" class="hl-key" hidden><i class="key-red"></i>secret <i class="key-yellow"></i>name</span>
+          <span id="in-info" class="info">Nothing yet</span>
+        </header>
+        <div class="code-box">
+          <pre id="line-nums-in" class="nums" aria-hidden="true"></pre>
+          <div class="ta-wrap">
+            <div class="hl-under" aria-hidden="true"><pre id="hl-layer"></pre></div>
+            <textarea id="code-in" placeholder="Paste your code here. Nothing leaves this page, promise." wrap="off" autocapitalize="off" autocomplete="off" spellcheck="false" aria-label="Original code to scrub"></textarea>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- right: the cleaned result -->
+      <article class="col">
+        <header class="col-top">
+          <div class="out-tabs" role="tablist" aria-label="Output">
+            <button class="out-tab" type="button" role="tab" data-tab="code" aria-selected="true">Sanitized</button>
+            <button class="out-tab" type="button" role="tab" data-tab="prompt" aria-selected="false">AI prompt</button>
+          </div>
+          <span id="out-info" class="info">Waiting for something to scan</span>
+        </header>
+        <div class="code-box light-sheet">
+          <pre id="line-nums-out" class="nums" aria-hidden="true"></pre>
+          <pre id="result-box" class="sheet" role="region" tabindex="0" data-empty="Your redacted code (or a ready-to-paste prompt) shows up here." aria-label="Sanitized output"></pre>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+  <!-- ===== sidebar: findings, aliases, tuning ===== -->
+  <aside class="sidebar" aria-label="Inspector">
+    <section>
+      <header><h2>Findings</h2><span id="hit-count" class="pill">0</span></header>
+      <ul id="hit-list" class="hit-list"><li class="nothing">Nothing flagged yet.</li></ul>
+    </section>
+
+    <section>
+      <header><h2>Renamed identities</h2><span id="alias-count" class="pill">0</span><button id="reset-names-btn" class="text-btn" type="button">Reset</button></header>
+      <ul id="alias-list" class="alias-list"><li class="nothing">Anything in the list below gets swapped for a neutral token.</li></ul>
+      <label class="ctrl">
+        <span>Watchlist <small>one per line, or <code>term =&gt; Token</code></small></span>
+        <textarea id="name-list" rows="4" spellcheck="false">Project Nightingale
+Vantage Systems Inc
+Nightingale</textarea>
+      </label>
+    </section>
+
+    <section>
+      <header><h2>Entropy check</h2></header>
+      <label class="ctrl slider">
+        <span>Threshold <output id="ent-thresh-val">4.20</output></span>
+        <input id="ent-thresh" type="range" min="3" max="5.5" step="0.05" value="4.2">
+        <small>Go lower to catch more, but expect extra false alarms.</small>
+      </label>
+      <label class="ctrl slider">
+        <span>Min. length <output id="min-chars-val">16</output></span>
+        <input id="min-chars" type="range" min="8" max="40" step="1" value="16">
+      </label>
+    </section>
+  </aside>
+</main>
+
+
+
+<!-- footer -->
+<footer class="footbar">
+  <span id="foot-msg">Ready</span>
+  <small id="foot-ms"></small>
+  <span class="foot-credit">© 2026 Winn Htut Hein, <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer">AGPL-3.0</a></span>
+</footer>
+
+<output id="popup" class="popup" aria-live="polite"></output>
+<noscript><p class="no-js">You'll need JavaScript on for this one. It all runs on your own machine anyway.</p></noscript>
+<script src="engine.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>
