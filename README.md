@@ -1,5 +1,7 @@
 # ZeroLeak
 
+![ZeroLeak](Screenshot%202026-10-20%20160447.png)
+
 **Live:** [zeroleak-three.vercel.app](https://zeroleak-three.vercel.app)
 
 You paste code into an AI chat to get help, and the code has a database password in it. ZeroLeak is a page that catches that before you hit send.
