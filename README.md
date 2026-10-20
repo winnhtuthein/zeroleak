@@ -1,5 +1,7 @@
 # ZeroLeak
 
+**Live:** [zeroleak-three.vercel.app](https://zeroleak-three.vercel.app)
+
 You paste code into an AI chat to get help, and the code has a database password in it. ZeroLeak is a page that catches that before you hit send.
 
 Paste code on the left; whatever it finds is shaded there (red for secrets, yellow for names) so you can see exactly what it caught. On the right you get the same code on a "paper" page: secrets are blacked out as `[REDACTED_JWT_01]`, and project or company names you listed are swapped for neutral ones like `ProjectAlpha` and highlighted in yellow. Copy the result, or copy the **AI prompt** tab, which wraps it in instructions for the assistant.
