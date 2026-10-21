@@ -1,0 +1,12 @@
+{
+  "name": "zeroleak",
+  "version": "1.1.0",
+  "description": "Offline, in-browser tool that scrubs secrets and company names from code before you paste it into an AI.",
+  "author": "Winn Htut Hein",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "check": "node scripts/check-site.js"
+  }
+}

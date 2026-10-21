@@ -1,0 +1,18 @@
+ZeroLeak
+Copyright (C) 2026 Winn Htut Hein
+
+Licensed under the GNU Affero General Public License, version 3 or (at your
+option) any later version. See the LICENSE file.
+
+Name and logo
+"ZeroLeak", its wordmark and its logo (the paper sheet carrying a Z built from two blacked-out
+bars and one highlighted stroke) are claimed by Winn Htut Hein as unregistered trademarks. The
+AGPL license covers the source code only. It does not grant permission to use
+the name or logo. If you distribute a modified version, please give it a
+different name and do not suggest that it is made or endorsed by the author.
+
+Third-party code
+None bundled. ZeroLeak has no runtime dependencies, loads no external scripts,
+fonts or images, and uses only system fonts. When served from Vercel, the host
+adds its own page-view analytics script at /_vercel/insights/script.js; that
+script is not part of this project's source.

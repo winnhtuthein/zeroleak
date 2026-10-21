@@ -1,0 +1,72 @@
+<!doctype html>
+<!--
+  ZeroLeak. Copyright (C) 2026 Winn Htut Hein.
+  SPDX-License-Identifier: AGPL-3.0-or-later. See LICENSE and NOTICE.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Winn Htut Hein">
+<meta name="description" content="Version history of ZeroLeak: what changed in each release.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0e1217">
+<title>Changelog | ZeroLeak</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo/zeroleak-favicon.svg">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the content</a>
+<header class="docbar">
+  <a class="brand" href="index.html" aria-label="ZeroLeak, back to the tool"><img src="assets/logo/zeroleak-lockup-on-dark.svg" alt="ZeroLeak" width="112" height="30"></a>
+  <nav aria-label="Site">
+      <a href="index.html">Tool</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="licenses.html">License</a>
+      <a href="changelog.html" aria-current="page">Changelog</a>
+  </nav>
+</header>
+
+<div class="sheet-wrap">
+<main id="main" class="doc">
+<h1>Changelog</h1>
+
+<p class="meta"><span>Current version 1.1.0</span></p><p>Every release of ZeroLeak, newest first. The format follows <a href="https://keepachangelog.com/en/1.1.0/" rel="noopener noreferrer">Keep a Changelog</a> and version numbers follow <a href="https://semver.org" rel="noopener noreferrer">Semantic Versioning</a>. Changes to the legal documents are also listed here; each of those pages carries its own version history.</p><section class="release" aria-labelledby="v1.1.0">
+<h2 id="v1.1.0">1.1.0 <time datetime="2026-10-21">2026-10-21</time></h2>
+<h3>Added</h3>
+<ul>
+  <li>Legal pages: Privacy Policy, Terms of Use, Disclaimer and License, each with its own version number, effective date and version history.</li>
+  <li>Page-view analytics through Vercel Web Analytics, loaded by a separate <code>analytics.js</code>. It is cookieless, page views only, and off for Do Not Track, Global Privacy Control, local files and localhost.</li>
+  <li>This changelog, plus <code>CHANGELOG.md</code> in the project.</li>
+  <li><code>vercel.json</code> with security headers and clean URLs, and <code>/.well-known/security.txt</code>.</li>
+  <li>Automated site checks (<code>tests/site.test.js</code>) covering links, version consistency, the content security policy, and that the scanning code makes no network calls.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+  <li>The page's content security policy now allows same-origin requests (previously none) so analytics can work. Remote scripts, images, fonts, frames and form posts remain blocked.</li>
+  <li>The badge now reads "Your code never leaves this tab" instead of "0 requests sent", because the page may now send an anonymous page view. It still turns red if the browser blocks a request.</li>
+  <li>Footer links to the legal pages and the current version.</li>
+</ul>
+</section>
+<section class="release" aria-labelledby="v1.0.0">
+<h2 id="v1.0.0">1.0.0 <time datetime="2026-10-19">2026-10-19</time></h2>
+<h3>Added</h3>
+<ul>
+  <li>First release: in-browser scanner for secrets and company names, with highlighted input, redacted output on a paper sheet, AI prompt tab, watchlist, entropy controls, copy and export.</li>
+</ul>
+</section>
+</main>
+<footer class="docfoot">
+  <span>ZeroLeak v1.1.0</span>
+  <span>© 2026 Winn Htut Hein</span>
+  <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener noreferrer">AGPL-3.0-or-later</a>
+  <a href="mailto:apex.decoy.scarface.web@gmail.com">Contact</a>
+</footer>
+</div>
+<script src="analytics.js" defer></script>
+</body>
+</html>

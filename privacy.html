@@ -1,0 +1,184 @@
+<!doctype html>
+<!--
+  ZeroLeak. Copyright (C) 2026 Winn Htut Hein.
+  SPDX-License-Identifier: AGPL-3.0-or-later. See LICENSE and NOTICE.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Winn Htut Hein">
+<meta name="description" content="How ZeroLeak handles data: your code never leaves your browser; anonymous, cookieless page-view analytics only.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0e1217">
+<title>Privacy Policy | ZeroLeak</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo/zeroleak-favicon.svg">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the content</a>
+<header class="docbar">
+  <a class="brand" href="index.html" aria-label="ZeroLeak, back to the tool"><img src="assets/logo/zeroleak-lockup-on-dark.svg" alt="ZeroLeak" width="112" height="30"></a>
+  <nav aria-label="Site">
+      <a href="index.html">Tool</a>
+      <a href="privacy.html" aria-current="page">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="licenses.html">License</a>
+      <a href="changelog.html">Changelog</a>
+  </nav>
+</header>
+
+<div class="sheet-wrap">
+<main id="main" class="doc">
+<h1>Privacy Policy</h1>
+<p class="meta"><span>Version 1.0</span><span>Effective <time datetime="2026-10-21">21 October 2026</time></span><span>Last updated <time datetime="2026-10-21">21 October 2026</time></span></p>
+<nav class="toc" aria-label="Contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#who">Who is responsible</a></li>
+    <li><a href="#code">Your code and text</a></li>
+    <li><a href="#collect">What is collected</a></li>
+    <li><a href="#analytics">Analytics in detail</a></li>
+    <li><a href="#device">Cookies and storage on your device</a></li>
+    <li><a href="#bases">Why this data is processed</a></li>
+    <li><a href="#recipients">Who else is involved</a></li>
+    <li><a href="#transfers">International transfers</a></li>
+    <li><a href="#retention">How long data is kept</a></li>
+    <li><a href="#rights">Your rights</a></li>
+    <li><a href="#optout">How to opt out</a></li>
+    <li><a href="#children">Children</a></li>
+    <li><a href="#links">Other websites</a></li>
+    <li><a href="#security">Security</a></li>
+    <li><a href="#changes">Changes to this policy</a></li>
+    <li><a href="#contact">Contact and complaints</a></li>
+    <li><a href="#history">Version history</a></li>
+  </ol>
+</nav>
+
+<section class="summary" aria-labelledby="sum">
+  <h2 id="sum">In plain words</h2>
+  <ul>
+    <li><strong>The code you paste is never sent to me or anyone else.</strong> It is scanned inside your browser tab and is gone when you close it.</li>
+    <li>ZeroLeak does not use cookies, does not save anything on your device, and has no accounts or sign-in.</li>
+    <li>I count page views with Vercel Web Analytics: which page, roughly where in the world, what kind of browser and device. It is cookieless and anonymous, and it never includes anything you type or paste.</li>
+    <li>If your browser sends Do Not Track or Global Privacy Control, analytics does not load at all.</li>
+  </ul>
+</section>
+
+<h2 id="who">1. Who is responsible</h2>
+<p>ZeroLeak (the "Tool") is made and run by Winn Htut Hein ("I", "me"). For the limited personal data described below, I am the controller (the person who decides why and how it is processed). You can reach me at <a href="mailto:apex.decoy.scarface.web@gmail.com">apex.decoy.scarface.web@gmail.com</a>.</p>
+<p>This policy covers the ZeroLeak website and the Tool as served from the address you are reading this on. If you download ZeroLeak and run it yourself, or someone else hosts a copy, this policy does not apply to their copy: the host of a copy decides what it collects.</p>
+
+<h2 id="code">2. Your code and text</h2>
+<p>Everything you paste or type into the Tool (source code, the watchlist of names, slider settings) is processed locally by JavaScript running in your browser tab. Specifically:</p>
+<ul>
+  <li>It is <strong>not transmitted</strong> to me, to Vercel, or to any other server. The scanning code (<code>engine.js</code> and <code>app.js</code>) contains no network calls, and the project's automated tests fail if one is added.</li>
+  <li>It is <strong>not stored</strong>. The Tool does not use cookies, <code>localStorage</code>, <code>sessionStorage</code>, IndexedDB or caches. Closing or reloading the tab clears it.</li>
+  <li>It is <strong>not part of analytics</strong>. The analytics script is a separate file that does not read the editors, the output, the clipboard or the watchlist, and I do not use custom analytics events.</li>
+  <li>The <strong>Copy</strong> and <strong>Export</strong> buttons only act when you press them: Copy writes to your clipboard and Export saves a text file to your own device. Neither sends anything to me.</li>
+</ul>
+<p>The page also declares a Content Security Policy that tells your browser to refuse remote scripts, images, fonts, frames and form submissions, and to allow only requests to the same website. The "Your code never leaves this tab" badge counts any request the browser reports as blocked. That badge is a convenience, not a guarantee; you can verify the behaviour yourself in your browser's network panel, or by running the source from disk.</p>
+<p>What the Tool does with your text is your own handling of it afterwards. If you paste the output into an AI service or anywhere else, that service's privacy policy applies, not this one.</p>
+
+<h2 id="collect">3. What is collected</h2>
+<div class="table-scroll">
+<table>
+  <thead><tr><th scope="col">Data</th><th scope="col">Purpose</th><th scope="col">Where it comes from</th></tr></thead>
+  <tbody>
+    <tr><td>Page view data (see section 4)</td><td>Counting visits and understanding which pages and browsers matter, so I can keep the Tool working and decide what to improve</td><td>Your browser, via Vercel Web Analytics</td></tr>
+    <tr><td>Standard web request data (IP address, user agent, requested URL, time)</td><td>Delivering the pages, abuse prevention and security</td><td>Your browser, received by the hosting provider (Vercel) as for any website</td></tr>
+    <tr><td>Messages you send me</td><td>Replying to you</td><td>You, by email or on the project's issue tracker</td></tr>
+  </tbody>
+</table>
+</div>
+<p>I do not collect names, accounts, payment details, advertising identifiers or precise location. I do not sell personal data, and I do not share it for advertising.</p>
+
+<h2 id="analytics">4. Analytics in detail</h2>
+<p>I use <a href="https://vercel.com/docs/analytics/privacy-policy" rel="noopener noreferrer">Vercel Web Analytics</a>, a first-party, cookieless service provided by Vercel Inc. When it is active, each page view can record:</p>
+<ul>
+  <li>the time of the visit;</li>
+  <li>the page address (for example <code>/privacy</code>), and filtered query parameters (the Tool does not use any);</li>
+  <li>the referrer, meaning the site you came from, if your browser provides one;</li>
+  <li>your approximate location as country, region and city, derived from your request by Vercel;</li>
+  <li>your operating system and version, browser and version, and device type (mobile, tablet or desktop);</li>
+  <li>the version of the analytics script.</li>
+</ul>
+<p>According to Vercel, visitors are distinguished by a hash created from the incoming request rather than by a cookie, and that visitor record is discarded automatically after 24 hours, so a returning visitor on another day looks like a new one. Vercel states that the data is not tied to an individual, customer or IP address and cannot be used to follow you across websites. I only see aggregated statistics in the Vercel dashboard.</p>
+<p>Analytics is limited to page views. I do not record clicks, keystrokes, scrolling, session replays or the content of the page, and I do not use custom events.</p>
+<p>Analytics loads only if all of these are true: the page is served over HTTPS from a real website (not from a local file or <code>localhost</code>), and your browser has <strong>not</strong> sent a Do Not Track or Global Privacy Control signal. See <a href="#optout">section 11</a>.</p>
+
+<h2 id="device">5. Cookies and storage on your device</h2>
+<p>ZeroLeak sets <strong>no cookies</strong> and does not write to <code>localStorage</code>, <code>sessionStorage</code> or IndexedDB. Because nothing is stored on your device for analytics or any other purpose, there is no cookie banner. Your browser's ordinary HTTP cache may keep copies of the site's files so it loads faster; that is controlled by your browser.</p>
+
+<h2 id="bases">6. Why this data is processed</h2>
+<p>If the General Data Protection Regulation (GDPR) or the UK GDPR applies to you, my legal basis for page-view analytics and for the standard request data held by the host is <strong>legitimate interests</strong> (Article 6(1)(f)): running a reliable service, keeping it secure and understanding basic usage. I have limited the data to what is needed, chosen an anonymous, cookieless tool, and honour opt-out signals, because those steps keep the impact on you low. You can object at any time (see <a href="#rights">section 10</a>). To reply to your message I rely on legitimate interests or, if you are asking me to do something for you, taking steps at your request.</p>
+
+<h2 id="recipients">7. Who else is involved</h2>
+<ul>
+  <li><strong>Vercel Inc.</strong> hosts this website and provides Web Analytics, and acts as my processor for that data. Vercel is based in the United States. Its handling of data is described in its <a href="https://vercel.com/legal/privacy-policy" rel="noopener noreferrer">privacy policy</a> and its data processing addendum.</li>
+  <li><strong>Legal and safety.</strong> I may disclose data if the law requires it or to protect the service from abuse. Because I hold so little, there is rarely anything to disclose.</li>
+</ul>
+<p>There are no advertising networks, social media widgets, tag managers or other third-party trackers on this site, and the Content Security Policy prevents the pages from loading them.</p>
+
+<h2 id="transfers">8. International transfers</h2>
+<p>Vercel runs a global network, so request data may be processed in countries other than your own, including the United States. Where the GDPR or the UK GDPR requires a transfer mechanism, I rely on the safeguards in Vercel's data processing addendum, such as standard contractual clauses and, where applicable, the EU-US Data Privacy Framework.</p>
+
+<h2 id="retention">9. How long data is kept</h2>
+<ul>
+  <li><strong>Your code and text:</strong> not kept at all. It never leaves your tab.</li>
+  <li><strong>Analytics:</strong> the visitor hash is discarded after 24 hours. Aggregated page-view statistics are kept in Vercel's dashboard for the retention period of the plan I use, and I do not export them or combine them with other data.</li>
+  <li><strong>Hosting logs:</strong> kept by Vercel for the period in its own policies.</li>
+  <li><strong>Emails and issues you send me:</strong> kept as long as needed to deal with your request, and then deleted unless I must keep them (for example, a public issue thread).</li>
+</ul>
+
+<h2 id="rights">10. Your rights</h2>
+<p>Depending on where you live, you may have the right to ask for access to your personal data, correction, deletion, restriction, a portable copy, and to object to processing, and to withdraw consent where processing relies on it. If you are in California or another US state with a privacy law, you have equivalent rights to know, delete and correct, and to opt out of sale or sharing. I do not sell or share personal data as those laws define it, and I treat a Global Privacy Control signal as an opt-out request.</p>
+<p>Analytics data is anonymous, so I usually cannot tell which records, if any, are yours. If you ask me to find or delete it, I may not be able to, and I may ask you for enough detail to try. This does not affect your rights over the messages you send me directly.</p>
+<p>To use any of these rights, email <a href="mailto:apex.decoy.scarface.web@gmail.com">apex.decoy.scarface.web@gmail.com</a>. I will answer within one month, or tell you why I need longer. I will not charge you or treat you differently for exercising your rights.</p>
+
+<h2 id="optout">11. How to opt out</h2>
+<ul>
+  <li><strong>Do Not Track or Global Privacy Control.</strong> Turn either on in your browser (or use a browser or extension that sends it). The analytics loader checks for both and does nothing if it finds one.</li>
+  <li><strong>Content blockers.</strong> Browsers and extensions that block analytics will also stop it. The Tool works the same either way.</li>
+  <li><strong>Run it yourself.</strong> Download the source and open <code>index.html</code> from disk. Analytics does not run there. See the <a href="licenses.html">license page</a>.</li>
+</ul>
+
+<h2 id="children">12. Children</h2>
+<p>ZeroLeak is a tool for software developers and is not directed at children under 16. I do not knowingly collect personal data from children. If you believe a child has sent me personal data, contact me and I will delete it.</p>
+
+<h2 id="links">13. Other websites</h2>
+<p>These pages link to other sites (for example, the GNU project and Vercel). I am not responsible for their content or privacy practices.</p>
+
+<h2 id="security">14. Security</h2>
+<p>The strongest protection for your code is that I never receive it. The site is served over HTTPS, uses a restrictive Content Security Policy, sends no referrer, and has no runtime dependencies. No system is perfectly secure; if you find a problem, please follow the <a href="https://github.com/winnhtuthein/zeroleak/security/policy" rel="noopener noreferrer">security reporting steps</a> or use the contact in <code>/.well-known/security.txt</code>.</p>
+
+<h2 id="changes">15. Changes to this policy</h2>
+<p>I will update this policy if the Tool or its analytics changes. The version, effective date and a summary of every change are recorded in the <a href="#history">version history</a> below. Adding any new category of data collection, or any request that could carry your code, would be a material change and would be announced there and in the <a href="changelog.html">changelog</a> before it takes effect.</p>
+
+<h2 id="contact">16. Contact and complaints</h2>
+<p>Questions or requests: <a href="mailto:apex.decoy.scarface.web@gmail.com">apex.decoy.scarface.web@gmail.com</a>. If you think I have handled your data unlawfully, you also have the right to complain to your local data protection authority, for example one listed by the <a href="https://edpb.europa.eu/about-edpb/about-edpb/members_en" rel="noopener noreferrer">European Data Protection Board</a> or, in the UK, the <a href="https://ico.org.uk" rel="noopener noreferrer">Information Commissioner's Office</a>. I would appreciate the chance to put things right first.</p>
+
+<h2 id="history">Version history</h2>
+<p>Each change to this policy gets a new version number and a row below. Typo fixes and clarifications that do not change your rights or my obligations take effect when published. A change that does affect them takes effect no sooner than 14 days after it is published here, and is also listed in the <a href="changelog.html">changelog</a>. Earlier versions are kept in the project's source history.</p>
+<div class="table-scroll">
+<table>
+  <thead><tr><th scope="col">Version</th><th scope="col">Effective</th><th scope="col">Changes</th></tr></thead>
+  <tbody>
+    <tr><td>1.0</td><td><time datetime="2026-10-21">21 October 2026</time></td><td>First publication, released with ZeroLeak v1.1.0.</td></tr>
+  </tbody>
+</table>
+</div>
+</main>
+<footer class="docfoot">
+  <span>ZeroLeak v1.1.0</span>
+  <span>© 2026 Winn Htut Hein</span>
+  <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener noreferrer">AGPL-3.0-or-later</a>
+  <a href="mailto:apex.decoy.scarface.web@gmail.com">Contact</a>
+</footer>
+</div>
+<script src="analytics.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<!--
+  ZeroLeak. Copyright (C) 2026 Winn Htut Hein.
+  SPDX-License-Identifier: AGPL-3.0-or-later. See LICENSE and NOTICE.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Winn Htut Hein">
+<meta name="description" content="ZeroLeak is a best-effort first pass: it will miss some secrets. Known limits, measurements and what to do if a secret leaks.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0e1217">
+<title>Disclaimer | ZeroLeak</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo/zeroleak-favicon.svg">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the content</a>
+<header class="docbar">
+  <a class="brand" href="index.html" aria-label="ZeroLeak, back to the tool"><img src="assets/logo/zeroleak-lockup-on-dark.svg" alt="ZeroLeak" width="112" height="30"></a>
+  <nav aria-label="Site">
+      <a href="index.html">Tool</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="disclaimer.html" aria-current="page">Disclaimer</a>
+      <a href="licenses.html">License</a>
+      <a href="changelog.html">Changelog</a>
+  </nav>
+</header>
+
+<div class="sheet-wrap">
+<main id="main" class="doc">
+<h1>Disclaimer</h1>
+<p class="meta"><span>Version 1.0</span><span>Effective <time datetime="2026-10-21">21 October 2026</time></span><span>Last updated <time datetime="2026-10-21">21 October 2026</time></span></p>
+<nav class="toc" aria-label="Contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#firstpass">A first pass, not a guarantee</a></li>
+    <li><a href="#limits">Known limits</a></li>
+    <li><a href="#measured">What has been measured</a></li>
+    <li><a href="#rotate">If a secret was exposed, rotate it</a></li>
+    <li><a href="#advice">Not professional advice</a></li>
+    <li><a href="#ai">AI services and the AI prompt tab</a></li>
+    <li><a href="#sample">Sample data</a></li>
+    <li><a href="#affil">No affiliation</a></li>
+    <li><a href="#history">Version history</a></li>
+  </ol>
+</nav>
+
+<section class="summary" aria-labelledby="sum">
+  <h2 id="sum">In plain words</h2>
+  <ul>
+    <li>ZeroLeak will miss some secrets and will flag some harmless text.</li>
+    <li><strong>Read the output before you share it.</strong> You are the last line of defence.</li>
+    <li>Redacting a secret now does not make a leaked secret safe. Rotate it.</li>
+  </ul>
+</section>
+
+<h2 id="firstpass">1. A first pass, not a guarantee</h2>
+<p>ZeroLeak uses pattern matching, variable-name heuristics, entropy measurement and your own watchlist. These methods are imperfect. The Tool does not promise that its output is free of secrets, credentials, personal data, trade secrets or confidential names, and it is not a substitute for human review, secret scanning in your repository, or your organisation's data-handling rules. This Disclaimer is part of the <a href="terms.html">Terms of Use</a>.</p>
+
+<h2 id="limits">2. Known limits</h2>
+<ul>
+  <li>Real scanners such as gitleaks and trufflehog know hundreds of formats; ZeroLeak knows about 30. A service it does not know about is only caught by its other checks.</li>
+  <li>A secret with no known format and no telling variable name (a short password in a comment, for example) gets through.</li>
+  <li>Filters that reduce false alarms also drop a few real cases, such as a password that is a plain sentence or passphrase with spaces, or an all-caps single word.</li>
+  <li>Random strings longer than 160 characters are treated as data, not tokens (long keys have their own patterns).</li>
+  <li>Auto-detected company names sometimes swallow a leading word. The watchlist is the reliable way to hide a name.</li>
+  <li>Variables named only <code>KEY</code> or <code>TOKEN</code> with short values are ignored on purpose.</li>
+  <li>Large inputs: above 1.5 MB it only scans when you press Sanitize, above 12 MB it refuses, and highlighting stops above 400 KB.</li>
+  <li>Browser support: tested in Chromium. Not yet tested in Firefox or Safari.</li>
+</ul>
+<p>The project's <code>README.md</code> keeps this list current; if the two differ, the README is newer.</p>
+
+<h2 id="measured">3. What has been measured</h2>
+<p>False positives were measured by scanning about 250 MB of public code, which left roughly one flag per 0.5 MB, mostly embedded base64 data. Detection of vendor key formats was tested against fake keys built to each vendor's documented format, not against live keys. Neither figure predicts how it will behave on your code. Test it on old or fake material first.</p>
+
+<h2 id="rotate">4. If a secret was exposed, rotate it</h2>
+<p>If a real secret was ever pasted somewhere it should not have been (a chat, a ticket, a public repository, a screenshot), assume it is compromised. Redacting it afterwards does not help. Revoke or rotate it with the service that issued it.</p>
+
+<h2 id="advice">5. Not professional advice</h2>
+<p>Nothing in the Tool or on this site is legal, security, compliance or other professional advice. Using it does not make you compliant with any law, standard or contract (for example GDPR, HIPAA, PCI DSS, SOC 2 or a customer's confidentiality terms). Ask a qualified person about your obligations.</p>
+
+<h2 id="ai">6. AI services and the AI prompt tab</h2>
+<p>The "AI prompt" tab wraps your sanitized text in instructions for an AI assistant. ZeroLeak does not send it anywhere; you choose to paste it into a service. Check that service's terms and your organisation's policy first, and remember that the replacement names (such as <code>ProjectAlpha</code>) hide the originals only if your watchlist was complete and the surrounding code does not reveal them in other ways.</p>
+
+<h2 id="sample">7. Sample data</h2>
+<p>The "Try a sample" text is invented. Its keys, passwords, company and project names are fake and do not refer to real credentials, systems or organisations. Do not paste real credentials into issues or tests either.</p>
+
+<h2 id="affil">8. No affiliation</h2>
+<p>ZeroLeak is an independent project. It is not affiliated with, sponsored or endorsed by any AI provider, any vendor whose key formats it recognises, or Vercel. Third-party names are used only to describe what the Tool detects or where it is hosted.</p>
+
+<h2 id="history">Version history</h2>
+<p>Each change to this disclaimer gets a new version number and a row below. Typo fixes and clarifications that do not change your rights or my obligations take effect when published. A change that does affect them takes effect no sooner than 14 days after it is published here, and is also listed in the <a href="changelog.html">changelog</a>. Earlier versions are kept in the project's source history.</p>
+<div class="table-scroll">
+<table>
+  <thead><tr><th scope="col">Version</th><th scope="col">Effective</th><th scope="col">Changes</th></tr></thead>
+  <tbody>
+    <tr><td>1.0</td><td><time datetime="2026-10-21">21 October 2026</time></td><td>First publication, released with ZeroLeak v1.1.0.</td></tr>
+  </tbody>
+</table>
+</div>
+</main>
+<footer class="docfoot">
+  <span>ZeroLeak v1.1.0</span>
+  <span>© 2026 Winn Htut Hein</span>
+  <a href="https://www.gnu.org/licenses/agpl-3.0.html" rel="noopener noreferrer">AGPL-3.0-or-later</a>
+  <a href="mailto:apex.decoy.scarface.web@gmail.com">Contact</a>
+</footer>
+</div>
+<script src="analytics.js" defer></script>
+</body>
+</html>
